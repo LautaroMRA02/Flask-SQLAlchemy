@@ -1,18 +1,22 @@
 from flask import Flask
+from flask import render_template
 
 app = Flask(__name__)
 
-posts = ['1']
+post = [1,1,1]
+
 
 @app.route('/')
-def hello_world():
-    return f'{len(posts)} posts'
+def index():
+    return render_template("index.html", num_posts=len(post))
 
 @app.route("/p/<string:slug>/")
 def show_post(slug):
-    return "Mostrando el post {}".format(slug)
+    return render_template('post_view.html', slug_title=slug)
 
 @app.route("/admin/post/")
-@app.route("/admin/post/<int:post_id>/")
+@app.route("/admin/post/<int:post_id>")
 def post_form(post_id=None):
-    return "post_form {}".format(post_id)
+    return render_template('admin/post_form.html', post_id=post_id)
+
+
